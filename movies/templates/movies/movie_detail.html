@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ movie.title }}</h2>
+    <p>Average Rating: {{ movie.average_rating }}</p>
+    {% if movie.poster %}
+        <img src="{{ movie.poster.url }}" alt="{{ movie.title }} Poster" width="200">
+        <p>Poster URL: {{ movie.poster.url }}</p>
+    {% else %}
+        <p>No poster available.</p>
+    {% endif %}
+
+    <p>{{ movie.description }}</p>
+    <p><strong>Director:</strong> {{ movie.director }}</p>
+    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+
+    <h3>Reviews</h3>
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>
+                    <strong>{{ review.user.username }}</strong>:
+                    {{ review.rating }}⭐ - {{ review.review_text }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reviews yet.</p>
+    {% endif %}
+
+    <a href="{% url 'review_create' movie.id %}">Add Review</a>
+
+    <h3>Upload Poster</h3>
+    <a href="{% url 'upload_poster' movie.id %}">Upload Poster</a>
+{% endblock %}
