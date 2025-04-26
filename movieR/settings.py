@@ -192,5 +192,5 @@ STORAGES = {
 }
 
 SILKY_PYTHON_PROFILER = True  # Enable Python-level profiling
-SILKY_METRICS_INTERVAL = 60  # Set how frequently profiling data is saved
+SILKY_METRICS_INTERVAL = 61  # Set how frequently profiling data is saved
 
