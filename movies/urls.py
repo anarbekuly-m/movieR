@@ -18,9 +18,6 @@ from .api_view import (
     WatchlistRemoveMovieAPIView
 )
 
-
-
-
 urlpatterns = [
     path('silk/', include('silk.urls', namespace='silk')),
     path('movies/', MovieListCreateAPIView.as_view(), name='movie-list-create'),

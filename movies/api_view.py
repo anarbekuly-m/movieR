@@ -7,6 +7,7 @@ from .models import Movie, Category, Review, Watchlist
 from .serializer import MovieSerializer, CategorySerializer, ReviewSerializer, WatchlistSerializer
 from django.shortcuts import get_object_or_404
 
+
 # Movie Endpoints
 
 class MovieListCreateAPIView(ListCreateAPIView):
@@ -24,6 +25,7 @@ class MovieListCreateAPIView(ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+
 class MovieRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Movie.objects.all()
 
@@ -35,6 +37,7 @@ class MovieRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     serializer_class = MovieSerializer
 
+
 # Category Endpoints
 
 class CategoryListCreateAPIView(ListCreateAPIView):
@@ -43,6 +46,7 @@ class CategoryListCreateAPIView(ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
 
 # Review Endpoints
 
@@ -60,6 +64,7 @@ class ReviewListCreateAPIView(ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+
 # Watchlist Endpoints
 
 class WatchlistRetrieveAPIView(APIView):
@@ -73,6 +78,7 @@ class WatchlistRetrieveAPIView(APIView):
         serializer = WatchlistSerializer(watchlist)
         return Response(serializer.data)
 
+
 class WatchlistAddMovieAPIView(APIView):
     def post(self, request, *args, **kwargs):
         movie_id = request.data.get('movie_id')
@@ -84,6 +90,7 @@ class WatchlistAddMovieAPIView(APIView):
         watchlist.movies.add(movie)
 
         return Response({"message": "Movie added to watchlist."}, status=status.HTTP_201_CREATED)
+
 
 class WatchlistRemoveMovieAPIView(APIView):
     def post(self, request, *args, **kwargs):

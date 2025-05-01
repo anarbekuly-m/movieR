@@ -65,6 +65,7 @@ class MovieDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 # ⭐ Review Create View (FBV for now)
 from django.contrib.auth.decorators import login_required
 
+
 @login_required
 def review_create(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)

@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from enum import Enum
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -30,14 +29,13 @@ class Movie(models.Model):
         return 0  # If no reviews exist, return 0
 
 
-
-
 class Rating(Enum):
     ONE = 1
     TWO = 2
     THREE = 3
     FOUR = 4
     FIVE = 5
+
 
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='reviews')
