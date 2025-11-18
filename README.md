@@ -1,4 +1,4 @@
-1️⃣ Full English README (Professional)
+Full English README (Professional)
 🎬 MovieR — Online Movie Platform
 
 Django REST Framework + React + PostgreSQL
@@ -6,7 +6,8 @@ Django REST Framework + React + PostgreSQL
 MovieR is a learning-focused but production-oriented project where I built a full-featured movie platform backend using Django and Django REST Framework, integrated with a React frontend.
 The goal was to understand real backend architecture, API design, authentication, permissions, media handling, and performance optimization.
 
-🚀 Features
+
+ Features
 
 User registration & session-based authentication
 
@@ -46,3 +47,27 @@ Python Enums for constants
 Frontend
 
 React (Single Page Application)
+
+Features:
+
+User authentication
+
+CRUD for movies & categories
+
+Media upload (posters)
+
+Permissions
+
+Optimized SQL queries
+
+Nested & custom serializers
+
+Learned:
+
+Building REST APIs
+
+DB optimization
+
+Class-Based Views
+
+React + Django integration
