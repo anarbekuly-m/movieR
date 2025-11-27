@@ -18,7 +18,33 @@ from .api_view import (
     WatchlistRemoveMovieAPIView
 )
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+#token
+#eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ2MTcwNjg4LCJpYXQiOjE3NDYxNjcwODgsImp0aSI6IjAzMTlhMzM4NjhhODRhZGQ4NGQ0NDliNDIyZTliMTNiIiwidXNlcl9pZCI6Mn0.Zut-77Xjd5RWGBV2lSe9ywqa7fDLJrPLqxoziGUL5yY
+
+
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView
+)
+
 urlpatterns = [
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Schema JSON
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+
+    # Swagger UI
+    path('api/docs/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+
+    # Redoc UI
+    path('api/docs/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+
     path('silk/', include('silk.urls', namespace='silk')),
     path('movies/', MovieListCreateAPIView.as_view(), name='movie-list-create'),
     # GET for listing and POST for creating

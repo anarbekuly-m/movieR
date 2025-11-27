@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,18 +13,36 @@ from django.shortcuts import get_object_or_404
 
 class MovieListCreateAPIView(ListCreateAPIView):
     queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    permission_classes = [IsAuthenticated]
 
-    # Prefetch related category and reviews for movies to avoid N+1 problem
     def get_queryset(self):
-        return Movie.objects.prefetch_related(
+        # Start with the base queryset
+        queryset = Movie.objects.prefetch_related(
             Prefetch('category'),
             Prefetch('reviews')
         )
 
-    serializer_class = MovieSerializer
+        # Get the query parameters for movie_id and category
+        movie_id = self.request.query_params.get('id', None)
+        category_name = self.request.query_params.get('category', None)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+        #GET /movies/?id=12&category=Sci-Fi
+
+        # Filter by movie ID if provided
+        if movie_id:
+            queryset = queryset.filter(id=movie_id)
+
+        # Filter by category name if provided
+        if category_name:
+            queryset = queryset.filter(category__name=category_name)
+
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class MovieRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -36,6 +55,7 @@ class MovieRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         )
 
     serializer_class = MovieSerializer
+    permission_classes = [IsAdminUser]
 
 
 # Category Endpoints

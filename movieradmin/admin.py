@@ -1,5 +1,10 @@
+# admin.py
 from django.contrib import admin
-from movies.models import Movie, Category, Review, Watchlist
+from django.contrib.auth.models import User
+
+
+
+from movies.models import Movie, Review, Category, Watchlist  # Import models from api_view.py
 
 # Custom Admin Panel Header & Titles
 class MovieRAdmin(admin.AdminSite):
@@ -7,30 +12,26 @@ class MovieRAdmin(admin.AdminSite):
     site_title = "MovieR Admin"
     index_title = "Welcome to MovieR Admin"
 
-# Category Admin
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
 
-# Movie Admin
+# Inline for Watchlist to show Movies in the Watchlist
+class WatchlistInline(admin.TabularInline):
+    model = Watchlist.movies.through  # This is the intermediate model for Many-to-Many relationship
+    extra = 0  # Number of empty forms to display by default
+
+# Admin class for Movie
+@admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('title', 'release_date', 'director', 'category')
-    list_filter = ('category',)
-    search_fields = ('title', 'director')
-    list_editable = ('category',)
+    inlines = [WatchlistInline]
 
-# Review Admin
-class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('movie', 'user', 'rating', 'created_at')
-    search_fields = ('movie__title', 'user__username')
-    list_filter = ('rating',)
 
-# Watchlist Admin
-class WatchlistAdmin(admin.ModelAdmin):
-    list_display = ('user',)
-
-# Register models to the custom admin site
 admin_site = MovieRAdmin(name="movieradmin")
-admin_site.register(Category, CategoryAdmin)
-admin_site.register(Movie, MovieAdmin)
-admin_site.register(Review, ReviewAdmin)
-admin_site.register(Watchlist, WatchlistAdmin)
+admin_site.register(Category)
+admin_site.register(Watchlist)
+admin_site.register(Movie,MovieAdmin)
+admin_site.register(Review)
+admin_site.register(User)
+
+
+
+
+
